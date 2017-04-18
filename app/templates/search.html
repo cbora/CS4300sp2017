@@ -2,13 +2,20 @@
     <head>
         <link rel="stylesheet" href="/static/bootstrap.min.css">
         <link rel="stylesheet" href="/static/main.css">
+        <link rel="stylesheet" href="/static/easy-autocomplete.min.css">
+        <link rel="stylesheet" href="/static/easy-autocomplete.themes.min.css">
+
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script src="/static/jquery.easy-autocomplete.min.js"></script>        
+
     </head>
     <body>
         <div class="topcorner">
             <p>Project Name: {{ name }}</p>
             <p>Student Name: ({{ netid }})</p>
         </div>
-        <form class="form-inline global-search">
+        <!-- <form class="form-inline global-search"> -->
+        <form class="form-inline text-center">
             <h1 style="font-size: 55px; font-family:Futura; color: #4285F4">
                 C
                 <font color=#EA4335>S</font>
@@ -17,13 +24,16 @@
                 <font color=#34A853>0</font>
                 <font color=#EA4335>0</font>
             </h1>
-            
+
             <br><br>
-            
+
             <div class="form-group">
-                <input id="input" type="text" name="search" class="form-control" placeholder="Your Input">
+              <input id="input" type="text" name="search" class="form-control col-md-8" placeholder="Your Input" style="width:500px">
+
             </div>
             <button type="submit" class="btn btn-info"> Go! </button>
+
+
         </form>
         <form class="form-inline global-search">
         {% if data %}
@@ -34,6 +44,44 @@
             {% endfor %}
         {% endif %}
         </form>
+        <script>
+          var options = {
+                        url: "/static/characters.json",          
+                        getValue: "display",
+          list: {
+          maxNumberOfElements: 15,
+          sort: true,
+                              match: {
+                                      enabled: true
+          },
+          showAnimation: {
+			type: "slide", //normal|slide|fade
+			time: 100,
+			callback: function() {}
+		},
+
+	hideAnimation: {
+			type: "normal", //normal|slide|fade
+			time: 400,
+			callback: function() {}
+	  }
+          },
+          placeholder: "Type character followed by movie name",
+
+          theme: "blue-light",
+          template: {
+          type: "description",
+          fields: {
+          description: "movie_title"
+          }
+          }
+          
+          
+          };
+
+          $('#input').easyAutocomplete(options);
+          
+        </script>
     </body>
 
 </html>

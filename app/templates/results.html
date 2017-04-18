@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+
+{% block container %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="col-md-12"> <!-- Top bar -->      </div>
+
+      <div class="col-md-12">
+
+
+        <!-- Left side or results -->
+        <div class="col-md-8">
+          
+          {% for d in data %}
+            
+          <div class="card col-md-12">
+
+            <h3 class="card-title"> {{ d['character_name'] }} </h3>
+            <br>
+            <h4 class="card-subtitle capitalize"> {{ d['movie_title'] }} ({{ d['movie_year'] }}) </h4>
+
+            <br>
+            <p> {{ d['rating'] }} </p>
+            <p> {{ d['genres'] }} </p>
+
+            <p> {{ d['gender'] }} </p>
+            <p> {{ d['votes'] }} </p>
+          </div>
+
+          {% endfor %}
+        </div> <!-- End of left side -->
+
+
+        <!-- Right side or Query info -->
+        <div class="col-md-4">
+          <div class="card col-md-12 text-right capitalize" style="border-color: #5bc0de;">
+            <h3 class="card-title"> {{ query['character_name'] }} </h3>
+            <br>
+            <h4 class="card-subtitle pull-right capitalize"> {{ query['movie_title'] }} ({{ query['movie_year'] }}) </h4>
+            <br>
+              <h6> {{ query['rating'] }} </h6>
+              <p> {{ query['genres'] }} </p>
+              <p> {{ query['gender'] }} </p>
+              <p> {{ query['votes'] }} </p>
+              <p> {{ query['movie_year'] }} </p>
+          </div>
+        </div><!-- End of right side -->
+
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+     
+{% endblock %}

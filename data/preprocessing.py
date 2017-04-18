@@ -159,6 +159,7 @@ class Data():
     def __init__(
             self,
             movie_id = None,
+            movie_title = None,
             movie_year = None,
             rating = None,
             votes = None,
@@ -169,6 +170,7 @@ class Data():
             position = None,
             lines = []):
         self.movie_id = movie_id
+        self.movie_title = movie_title
         self.movie_year = movie_year
         self.rating = rating
         self.votes = votes
@@ -182,6 +184,7 @@ class Data():
     def __dict__():
         return {
             'movie_id': self.movie_id,
+            'movie_title': self.movie_title,
             'movie_year': self.movie_year,
             'rating': self.rating,
             'votes': self.votes,
@@ -270,7 +273,8 @@ def lookup_lines(ch_id, m_id, lines):
         return ""
     results = ""
     for r in tmp:
-        results += r
+        results += r.strip()
+    
     return results
 
 def make_data_structure(movies, characs, lines):
@@ -279,6 +283,7 @@ def make_data_structure(movies, characs, lines):
     for i, c in enumerate(characs):
         print i
         d = Data(movie_id = c.movie_id,
+                 movie_title = movies[c.movie_id].title,
                  movie_year = movies[c.movie_id].year,
                  rating = movies[c.movie_id].rating,
                  votes = movies[c.movie_id].votes,
@@ -308,8 +313,8 @@ lines = parse_movie_lines()
 
 print "Serializing characters...\n"
 def save_characters():
-    with open('characters2.json', 'w') as outfile:
-        json.dump(json.dumps(characs.prettify_json()), outfile)
+    with open('characters.json', 'w') as outfile:
+        json.dump(characs.prettify_json(), outfile)
     
 print "Serializing data...\n"
 def save_data():

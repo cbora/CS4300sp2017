@@ -36,3 +36,12 @@ border: none
 .step-links a{
 color: #4285F4;
 }
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+
+.lowercase {
+    text-transform: lowercase;
+}
