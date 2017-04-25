@@ -12,6 +12,25 @@ body {
 padding-top: 15%;
 padding-bottom: 15px;
 }
+
+.el {
+    padding-bottom: 15px;
+}
+
+.e-t {
+    font-weight: 900;
+    font-style: normal;
+    color: #000000;
+    text-tranform: capitalize;
+}
+
+.charac-name {
+    color: blue;
+    font-weight: 900;
+    font-size: 16px;
+    font-style: normal;
+    font-family: Avenir, sans serif;
+}
 .global-search {
 text-align:center;
 padding:10px;
