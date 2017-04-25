@@ -3,6 +3,9 @@ Repo for CS4300 project
 ## Quickstart
 
 
+Numpy matrix link: https://s3.amazonaws.com/cs4300/sims_array.npy
+
+
 (1) Install heroku-cli using this linkk:
 
 
