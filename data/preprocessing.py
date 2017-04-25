@@ -246,10 +246,13 @@ def parse_movie_characters(file_name='movie_characters_metadata.txt'):
 
     return characs
 
-
+'''
+now filtering out movie-specifc jargon!
+'''
 def parse_movie_lines(file_name='movie_lines.txt'):
     # Function to parse movie lines into an object
     lines  = Lines()
+    wordToDifferentMovies = {}
     f = open(file_name, 'r')
     for l in f.readlines():
         try:            
@@ -258,13 +261,60 @@ def parse_movie_lines(file_name='movie_lines.txt'):
             l = l.decode('ISO-8859-1')
             l = l.encode('utf-8')
         s = l.split(SEPARATOR)
+        # GET which movies each word has appeared in, and store it in a set
+        for wor in s[4].split():
+            worl = wor.lower()
+            wordToDifferentMovies[worl] = wordToDifferentMovies.get(worl,set())
+            wordToDifferentMovies[worl].add(s[2])
+    # get if the sets for each word's appearances > min limit & store it.
+    MIN_APPEARANCES = 4
+    wordsAboveThreshold = {k:len(wordToDifferentMovies[k])>MIN_APPEARANCES for k in wordToDifferentMovies.keys()}
+    f.close()
+    f = open(file_name, 'r')
+    above = 0
+    below = 0
+    for l in f.readlines():
+        try:            
+            l = l.decode('cp1252')
+        except:
+            l = l.decode('ISO-8859-1')
+            l = l.encode('utf-8')
+        s = l.split(SEPARATOR)
+        # given each word, make sure its appeared in 
+        # above a certain threshold of movies (currently 5)
+        # keep the valid words to store as text.
+        textToUse = []
+        for wor in s[4].split():
+            worl = wor.lower()
+            if wordsAboveThreshold[worl]:
+                textToUse.append(wor)
+                above+=1
+            else:
+                below+=1
         line = Line(
             id = s[0],
             character_id = s[1],
             movie_id = s[2],
             character_name = s[3],
-            text = s[4])
+            text = " ".join(textToUse))
         lines.add_line(line)
+    # print above,"ABOVE"
+    # print below,"BELOW"
+    # Original code w/o movie-specific jargon.
+    # for l in f.readlines():
+    #     try:            
+    #         l = l.decode('cp1252')
+    #     except:
+    #         l = l.decode('ISO-8859-1')
+    #         l = l.encode('utf-8')
+    #     s = l.split(SEPARATOR)
+    #     line = Line(
+    #         id = s[0],
+    #         character_id = s[1],
+    #         movie_id = s[2],
+    #         character_name = s[3],
+    #         text = s[4])
+    #     lines.add_line(line)
     return lines
 
 def lookup_lines(ch_id, m_id, lines):

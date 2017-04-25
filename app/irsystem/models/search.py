@@ -4,8 +4,8 @@ import os
 import requests
 from StringIO import StringIO
 # Load some data into memory
-
-
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 print os.getcwd()
 
 data_file_name = 'data/data.json'
@@ -40,12 +40,40 @@ def query_info(query):
     index = character_to_index_map[tmp]
     return data[index]
 
+'''computes best fuzzy match to query paramter & return'''
+def getFuzzyMatch(query):
+    # make score dictionary 
+    xToScores = {x['display'].lower():[-1,-1] for x in chars}
+    # conversion from usable comparison back to formal storage
+    lowerToUpper = {x['display'].lower():x for x in chars}
+    lQ = query.lower()
+    # compute scores for each movie on ratio and token_set_ratio
+    for x in lowerToUpper.keys(): 
+        xToScores[x][0] = fuzz.ratio(x,lQ)
+        xToScores[x][1] = fuzz.token_set_ratio(x.lower(),lQ)
+    # sort by specific ratio
+    byRatio = sorted(xToScores.iteritems(), key=lambda i:i[1][0],reverse=True)
+    byToken = sorted(xToScores.iteritems(), key=lambda i:i[1][1],reverse=True)
+    # pull out character name
+    byRatio = [n[0] for n in byRatio]
+    byToken = [n[0] for n in byToken]
+    # get top 3 for each one to choose from 
+    possibles = byRatio[:3] + byToken[:3]
+    # choose (black box implementation by fuzzywuzzy)
+    finalAnswer = process.extractOne(query, possibles)[0]
+    # convert back to original display name
+    return lowerToUpper[finalAnswer]['display']
+
+def queryExists(query):
+    return auto_fill_id_map.get(query,None) != None
+
 def process_query(query):
     """
      Function to process query and assumes query is the character id
 
     """
     tmp= auto_fill_id_map[query]
+
     index = character_to_index_map[tmp]
     row = scores[index]
 

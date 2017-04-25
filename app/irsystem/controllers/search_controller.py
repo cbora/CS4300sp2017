@@ -5,7 +5,8 @@ from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 from app.irsystem.models.search import query_info
 from app.irsystem.models.search import process_query
-
+from app.irsystem.models.search import getFuzzyMatch
+from app.irsystem.models.search import queryExists
 
 project_name = "Movie Character Similarity"
 net_id = "Chris Bora: cdb239, Jacob Cooper: jtc267, Kurt Shuster: kls294, Jordan Stout: jds459"
@@ -17,6 +18,10 @@ def search():
 		data = []
 		output_message = ''
 	else:
+		# if we need to fuzzy match because the query doesn't exist
+		if not queryExists(query):
+			query = getFuzzyMatch(query)
+
 		output_message = "Your search: " + query
                 data = process_query(query)
                 info = query_info(query)
