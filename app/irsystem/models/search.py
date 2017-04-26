@@ -49,7 +49,7 @@ def query_info(query):
         d['poster'] = more_data[cid]['poster']
         d['plot'] = more_data[cid]['plot']
     except:
-        d['poster'] = 'N/A'
+        d['poster'] = 'http://images.clipartpanda.com/movie-night-clipart-9cp4q9xcE.jpeg'
         d['plot'] = 'N/A'
     return d
 
