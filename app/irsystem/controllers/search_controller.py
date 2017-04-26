@@ -14,7 +14,7 @@ net_id = "Chris Bora: cdb239, Jacob Cooper: jtc267, Kurt Shuster: kls294, Jordan
 @irsystem.route('/', methods=['GET'])
 def search():
         query = request.args.get('search')
-        version = request.args.get('v')
+        version = request.args.get('version')
 	if not query:
 		data = []
 		output_message = ''
