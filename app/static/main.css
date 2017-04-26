@@ -13,6 +13,22 @@ padding-top: 15%;
 padding-bottom: 15px;
 }
 
+.top-bar {
+    position: absolute;
+    height: 80px;
+    background-color: #fafafa;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+
+}
+
+.charac-color{
+    color: #4285F4;
+}
+
+.movie-color {
+    color: #34A853;
+}
+
 .el {
     padding-bottom: 15px;
 }
@@ -23,7 +39,25 @@ padding-bottom: 15px;
     color: #000000;
     text-tranform: capitalize;
 }
+.highlight {
+    color: #FBBC05;
+}
 
+.mark {
+    background: #FBBC05;
+    color: black;
+}
+    
+
+
+.charac {
+    text-transform: lowercase;
+}
+
+.charac:first-letter {
+    text-transform: uppercase;
+}
+    
 .charac-name {
     color: blue;
     font-weight: 900;

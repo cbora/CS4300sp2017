@@ -3,72 +3,107 @@
 
 {% block container %}
 
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-        <form class="form-inline">
-          <div class="form-group">
-            <input id="input" type="text" name="search" class="form-control col-md-8" placeholder="Character name - Movie name" style="width:500px;">
-          </div>
-          <button type="submit" class="btn btn-info"> Go! </button>
-        </form>        
 
-      
+      <div class="col-md-12 top-bar" style="margin-left:-16px"></div>
       <div class="col-md-12">
+        <form class="form-inline">
 
-
-        <!-- Left side or results -->
-        <div class="col-md-8">
-          
-          {% for d in data %}
-            
-          <div class="card col-md-12">
-
-            <h3 class="card-title">
-              <i class="fa fa-user-circle"></i>&nbsp;
-              {{ d['character_name'] }}
+          <h3 style="font-size: 30px; font-family:Futura; color: #4285F4" style="bottom:0">
+                M
+                <font color=#EA4335>O</font>
+                <font color=#FBBC05>O</font>
+                G
+                <font color=#34A853>L</font>
+                <font color=#EA4335>E</font>
+                <span class="form-group">
+            <input id="input" type="text" name="search" class="form-control col-md-8" placeholder="Character name - Movie name" style="width:500px;">
+          </span>
+          <button type="submit" class="btn btn-info"> Go! </button>
             </h3>
-            <br>
-            <h4 class="card-subtitle capitalize">
-              <i class="fa fa-tv"></i>&nbsp;
-              {{ d['movie_title'] }} ({{ d['movie_year'] }})
-            </h4>
 
-            <br>
-            <div class="el">
-              <i class="fa fa-plus-square"></i>&nbsp;
-              <span class="e-t">Rating</span>&nbsp;
-              {{ d['rating'] }}
-            </div>
+        </form>
+      </div>
 
-            <div class="el">
-              <i class="fa fa-tags"></i>&nbsp;
-              <span class="e-t">Genres</span>&nbsp;
-              {{ d['genres'] }}
-            </div>
-
-            {% if d['gender'] == "m" %}
-            <div class="el">
-              <i class="fa fa-male"></i>&nbsp;
-              <span class="e-t">Gender</span>&nbsp;
-                  {{ d['gender'] }}
-            </div>
-            {% endif %}
-
-            {% if d['gender'] == "f" %}
-            <div class="el">
-              <i class="fa fa-female"></i>&nbsp;
-              <span class="e-t">Gender</span>&nbsp;
-              {{ d['gender'] }}
-            </div>
-            {% endif %}
+      <div class="col-md-12"><br><br></div>
+      <!-- Left side or results -->
+      <div class="col-md-1"></div>
+    <div class="col-md-6">
+          
+      {% for d in data %}
             
-            <div class="el">
-              <i class="fa fa-thumbs-up"></i>&nbsp;
-              <span class="e-t">Votes</span>&nbsp;
-              {{ d['votes'] }}
-            </div>
+      <div class="card col-md-12 capitalize">
+        
+        <div class="col-md-7">
+        <h3 class="card-title charac-color">
+          {% if d['gender'] == "f" %}
+          <i class="fa fa-user-circle"></i>&nbsp;
+          {% else %}
+          <i class="fa fa-user"></i>&nbsp;
+          {% endif %}
+          <a href="/?search={{d['character_name']}} - {{d['movie_title']}}" style="color:#4285F4">
+            {{ d['character_name'] }}</a>
+        </h3>
+        <br>
+        <h4 class="card-subtitle capitalize movie-color">
+          <i class="fa fa-tv"></i>&nbsp;
+          {{ d['movie_title'] }} ({{ d['movie_year'] }})
+        </h4>
+
+        <br>
+        <div class="el">
+          <i class="fa fa-plus-square"></i>&nbsp;
+          <span class="e-t">Rating</span>&nbsp;
+          {{ d['rating'] }}
+        </div>
+        <div class="el">
+          <i class="fa fa-tags"></i>&nbsp;
+          <span class="e-t">Genres</span>&nbsp;
+          <span class="genres tohigh">{{ d['genres'] }}</span>
+        </div>
+
+        {% if d['gender'] == "m" %}
+        <div class="el">
+          <i class="fa fa-male"></i>&nbsp;
+          <span class="e-t">Gender</span>&nbsp;
+          {{ d['gender'] }}
+        </div>
+        {% endif %}
+        
+        {% if d['gender'] == "f" %}
+        <div class="el">
+          <i class="fa fa-female"></i>&nbsp;
+          <span class="e-t">Gender</span>&nbsp;
+          {{ d['gender'] }}
+        </div>
+        {% endif %}
+            
+        <div class="el">
+          <i class="fa fa-thumbs-up"></i>&nbsp;
+          <span class="e-t">Votes</span>&nbsp;
+          {{ d['votes'] }}
+        </div>
+
+        </div>
+
+        <div class="col-md-5">
+          <div class="col-md-12">
+            <img src="{{ d['poster'] }}" class="img img-responsive">
           </div>
+        </div>
+        <div class="el">
+          <br>
+          <i class="fa fa-archive"></i>&nbsp;
+          <span class="e-t">Plot</span>&nbsp;
+          {{ d['plot'] }}
+        </div>
+
+        
+      </div>
+
+
 
           {% endfor %}
         </div> <!-- End of left side -->
@@ -77,58 +112,75 @@
         <!-- Right side or Query info -->
         <div class="col-md-4">
           <div class="card col-md-4 capitalize" style="border-color: #5bc0de; position:fixed;">
-            <h3 class="card-title">
-              <i class="fa fa-user-circle"></i>&nbsp;
-              {{ query['character_name'] }}
-            </h3>
-            <br>
-            <h4 class="card-subtitle capitalize">
-              <i class="fa fa-tv"></i>&nbsp;
-              {{ query['movie_title'] }} ({{ query['movie_year'] }})
-            </h4>
-            <br>
+            <div class="col-md-7">
+              <h3 class="card-title charac-color">
+                <i class="fa fa-user-circle"></i>&nbsp;
+                {{ query['character_name'] }}
+              </h3>
+              <br>
+              <h4 class="card-subtitle capitalize movie-color">
+                <i class="fa fa-tv"></i>&nbsp;
+                {{ query['movie_title'] }} ({{ query['movie_year'] }})
+              </h4>
+              <br>
 
-            <div class="el">
-              <i class="fa fa-plus-square"></i>&nbsp;
-              <span class="e-t">Rating</span>&nbsp;
-              {{ query['rating'] }}
-            </div>
+              <div class="el">
+                <i class="fa fa-plus-square"></i>&nbsp;
+                <span class="e-t">Rating</span>&nbsp;
+                {{ query['rating'] }}
+              </div>
 
-            <div class="el">
-              <i class="fa fa-tags"></i>&nbsp;
-              <span class="e-t">Genres</span>&nbsp;
-              {{ query['genres'] }}
-            </div>
+              <div class="el">
+                <i class="fa fa-tags"></i>&nbsp;
+                <span class="e-t">Genres</span>&nbsp;
+                <span class="genres source"> {{ query['genres'] }} </span>
+              </div>
             
 
-            {% if query['gender'] == "m" %}
-            <div class="el">
-              <i class="fa fa-male"></i>&nbsp;
-              <span class="e-t">Gender</span>&nbsp;
-              {{ query['gender'] }}
-            </div>
-            {% endif %}
+              {% if query['gender'] == "m" %}
+              <div class="el">
+                <i class="fa fa-male"></i>&nbsp;
+                <span class="e-t">Gender</span>&nbsp;
+                {{ query['gender'] }}
+              </div>
+              {% endif %}
             
-            {% if query['query'] == "f" %}
-            <div class="el">
-              <i class="fa fa-female"></i>&nbsp;
-              <span class="e-t">Gender</span>&nbsp;
-              {{ query['gender'] }}
-            </div>
-            {% endif %}
+              {% if query['query'] == "f" %}
+              <div class="el">
+                <i class="fa fa-female"></i>&nbsp;
+                <span class="e-t">Gender</span>&nbsp;
+                {{ query['gender'] }}
+              </div>
+              {% endif %}
 
+              <div class="el">
+                <i class="fa fa-thumbs-up"></i>&nbsp;
+                <span class="e-t">Votes</span>&nbsp;
+                {{ query['votes'] }}
+              </div>
+            </div>
+
+            
+            <div class="col-md-5">
+              <div class="col-md-12">
+                <img src="{{ query['poster'] }}" class="img img-responsive">
+              </div>
+            </div>
             <div class="el">
-              <i class="fa fa-thumbs-up"></i>&nbsp;
-              <span class="e-t">Votes</span>&nbsp;
-              {{ query['votes'] }}
+              <br>
+              <i class="fa fa-archive"></i>&nbsp;
+              <span class="e-t">Plot</span>&nbsp;
+              {{ query['plot'] }}
             </div>
-            </div>
+
+          </div>
+          
         </div><!-- End of right side -->
-
+        <div class="col-md-1"></div>
 
       </div>
       
-    </div>
+
   </div>
 </div>
 
@@ -169,6 +221,35 @@ $('#input').easyAutocomplete(options);
 
 </script>
 
+
+<script>
+
+$('.genres').each(function () {
+
+    var text = $(this).text().replace(new RegExp(',', 'g'), '');
+    text = text.replace('[', '');
+    text = text.replace(']', '');
+    text = text.replace(new RegExp('\'', 'g'), '');
+    $(this).text(text);
+
+});
+
+keywords = $('.source').text();
+$('.tohigh').mark(keywords);
+$('.charac').each(function () {
+    var text = $(this).text();
+    var f = text.substring(0,1);
+    f.toUpperCase();
+    tail = text.substring(1);
+    text = f + tail;
+    $(this).text(text);
+    //$(this).css('textTransform', 'capitalize');
+    //$(this).text( $(this).text().toUpperCase() );
+});
+
+
+
+</script>
 
 
 {% endblock %}

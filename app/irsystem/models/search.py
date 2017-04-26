@@ -15,8 +15,13 @@ with open(data_file_name) as data_file:
 url = "https://s3.amazonaws.com/cs4300/sims_array.npy"
 r = requests.get(url)
 #scores = np.load('data/sims_array.npy')
-scores = np.load(StringIO(r.content))
+#scores = np.load(StringIO(r.content))
+scores = np.load('data/hash_all_sims_array.npy')
 
+results_file_name = 'data/result.json'
+with open(results_file_name) as d:
+    more_data = json.load(d)
+    
 # character_id to index mapping
 character_to_index_map = {}
 for i, v in enumerate(data):
@@ -38,7 +43,15 @@ for x in chars:
 def query_info(query):
     tmp = auto_fill_id_map[query]
     index = character_to_index_map[tmp]
-    return data[index]
+    d = data[index]
+    cid = d['character_id']
+    try:
+        d['poster'] = more_data[cid]['poster']
+        d['plot'] = more_data[cid]['plot']
+    except:
+        d['poster'] = 'N/A'
+        d['plot'] = 'N/A'
+    return d
 
 '''computes best fuzzy match to query paramter & return'''
 def getFuzzyMatch(query):
@@ -69,6 +82,61 @@ def queryExists(query):
 
 def process_query(query):
     """
+     Function to process query and assumes query is the character id
+
+
+    tmp= auto_fill_id_map[query]
+
+    index = character_to_index_map[tmp]
+    row = scores[index]
+
+    t = []
+    for i, v in enumerate(row):
+        if v < 0:
+            # do not add it this score (either from same movie or same character)
+            continue
+        t.append((v, i))
+
+    t = sorted(t)
+    indexes = [x[1] for x in t]
+    results = []
+    for i in reversed(indexes):
+        results.append(data[i])
+
+    # return results in sorted order
+    return results[:20]
+    """
+
+    tmp = auto_fill_id_map[query]
+    index = character_to_index_map[tmp]
+    row = scores[index]
+
+    results = []
+    for i in row:
+        print i
+        e = int(i)
+        
+
+        d = data[e]
+        cid = d['character_id']
+        d['character_name'] = d['character_name'].lower()
+        #print more_data[cid]
+
+        try:
+            d['poster'] = more_data[cid]['poster']
+            d['plot'] = more_data[cid]['plot']
+        except:
+            d['poster'] = 'N/A'
+            d['plot'] = 'N/A'
+        #d['character_id'] = 
+        #results[-1]['character_name'] = results[-1]['character_name'].lower()
+        results.append(d)
+    return results
+
+def process_query_first_version(query):
+    """
+     Process query of first function
+    
      Function to process query and assumes query is the character id
 
     """
