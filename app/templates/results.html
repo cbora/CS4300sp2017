@@ -48,7 +48,7 @@
         </h3>
         <br>
         <h4 class="card-subtitle capitalize movie-color">
-          <i class="fa fa-tv"></i>&nbsp;
+          <i class="fa fa-film"></i>&nbsp;
           {{ d['movie_title'] }} ({{ d['movie_year'] }})
         </h4>
 
@@ -85,20 +85,40 @@
           <span class="e-t">Votes</span>&nbsp;
           {{ d['votes'] }}
         </div>
+         <i class="fa fa-archive"></i>&nbsp;
+          <span class="e-t">Plot</span>&nbsp;
+          <span class="plot"> {{ d['plot'] }} </span>
 
         </div>
 
         <div class="col-md-5">
           <div class="col-md-12">
+            <br>
             <img src="{{ d['poster'] }}" onerror="this.src='http://images.clipartpanda.com/movie-night-clipart-9cp4q9xcE.jpeg'" class="img img-responsive">
           </div>
         </div>
-        <div class="el">
+        <div class="el col-md-12">
           <br>
-          <i class="fa fa-archive"></i>&nbsp;
+          <!-- <i class="fa fa-archive"></i>&nbsp;
           <span class="e-t">Plot</span>&nbsp;
-          {{ d['plot'] }}
+          <span class="plot"> {{ d['plot'] }} </span> -->
         </div>
+
+        <div class="col-md-12">
+          <br>
+          <span class="score score1 col-md-3">Word sim {{d['tfidf']}}%</span>
+          <span class="score score2 col-md-3">Movie sim {{d['movie']}}%</span>
+          <span class="score score3 col-md-3">Importance {{d['charac_score']}}%</span>
+          <span class="score score4 col-md-3">Sentiment {{d['sentiment']}}%</span>
+          <br>
+          <br>
+        </div>
+
+        <div class="col-md-12">
+          <!--{{ d['character_id'] }}-->
+          
+        </div>
+        
 
         
       </div>
@@ -119,7 +139,7 @@
               </h3>
               <br>
               <h4 class="card-subtitle capitalize movie-color">
-                <i class="fa fa-tv"></i>&nbsp;
+                <i class="fa fa-film"></i>&nbsp;
                 {{ query['movie_title'] }} ({{ query['movie_year'] }})
               </h4>
               <br>
@@ -163,6 +183,7 @@
             
             <div class="col-md-5">
               <div class="col-md-12">
+                <br>
                 <img src="{{ query['poster'] }}" onerror="this.src='http://images.clipartpanda.com/movie-night-clipart-9cp4q9xcE.jpeg'" class="img img-responsive">
               </div>
             </div>
@@ -170,7 +191,11 @@
               <br>
               <i class="fa fa-archive"></i>&nbsp;
               <span class="e-t">Plot</span>&nbsp;
-              {{ query['plot'] }}
+              <span class="plot"> {{ query['plot'] }} </span>
+            </div>
+
+            <div class="col-md-12">
+              <!-- {{ query['lines'] }} -->
             </div>
 
           </div>

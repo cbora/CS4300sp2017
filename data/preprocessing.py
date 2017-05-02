@@ -323,6 +323,7 @@ def lookup_lines(ch_id, m_id, lines):
         return ""
     results = ""
     for r in tmp:
+        results += " "
         results += r.strip()
     
     return results
@@ -345,7 +346,7 @@ def make_data_structure(movies, characs, lines):
                  lines = lookup_lines(c.id, c.movie_id, lines)
                  )
         ds.append(d.__dict__)
-
+    ds = sorted(ds, key=lambda d:("character_id" not in d, d.get("character_id")))
     return ds
         
         
@@ -363,11 +364,13 @@ lines = parse_movie_lines()
 
 print "Serializing characters...\n"
 def save_characters():
-    with open('characters.json', 'w') as outfile:
+    with open('characters2.json', 'w') as outfile:
         json.dump(characs.prettify_json(), outfile)
     
 print "Serializing data...\n"
 def save_data():
-    with open('data2.json', 'w') as outfile2:
+    with open('data_sorted_keys.json', 'w') as outfile2:
         json.dump(make_data_structure(movies, characs, lines), outfile2)
 
+        
+save_data()

@@ -16,7 +16,9 @@ url = "https://s3.amazonaws.com/cs4300/sims_array.npy"
 r = requests.get(url)
 #scores = np.load('data/sims_array.npy')
 #scores = np.load(StringIO(r.content))
-scores = np.load('data/hash_all_sims_array.npy')
+#scores = np.load('data/hash_all_sims_array.npy')
+#scores = np.load('data/hash_all_sims_array_new.npy')
+scores = np.load('data/hash_top20_sims_array_final.npy')
 
 results_file_name = 'data/result.json'
 with open(results_file_name) as d:
@@ -108,19 +110,32 @@ def process_query(query):
     """
 
     tmp = auto_fill_id_map[query]
+    print "TMP: ", tmp
     index = character_to_index_map[tmp]
+    print "INDEX: ", index
     row = scores[index]
 
     results = []
-    for i in row:
-        print i
-        e = int(i)
+    i = 0
+    for k in range(0, len(row)/5):
+        #print i
+        # e = index of similar characters
+        e = int(row[i])
         
 
         d = data[e]
         cid = d['character_id']
         d['character_name'] = d['character_name'].lower()
         #print more_data[cid]
+        i = i + 1
+        d['sentiment'] = int(round(row[i] * 100))
+        i = i + 1
+        d['tfidf'] = int(round(row[i] * 100))
+        i = i + 1
+        d['movie'] = int(round(row[i] * 100))
+        i = i + 1
+        d['charac_score'] = int(round(row[i] * 100))
+        i = i + 1    
 
         try:
             d['poster'] = more_data[cid]['poster']

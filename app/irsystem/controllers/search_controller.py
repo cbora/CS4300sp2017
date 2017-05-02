@@ -1,3 +1,4 @@
+
 from . import * 
 from app.irsystem.models.matrix import Matrix
 from app.irsystem.models.redisconn import RedisConn as RedisConn 
@@ -19,9 +20,12 @@ def search():
 		data = []
 		output_message = ''
 	else:
-                if version:
+                if version == '1':
                         # call a specific version
                         return search_v1(query)
+
+                if version == '2':
+                        return search_v2(query)
                 
 		# if we need to fuzzy match because the query doesn't exist
 		if not queryExists(query):
@@ -39,3 +43,13 @@ def search_v1(query):
         data = process_query(query)
         info = query_info(query)
         return render_template('results_v1.html', data=data, query=info)
+
+
+def search_v2(query):
+        if not queryExists(query):
+                query = getFuzzyMatch(query)
+
+	output_message = "Your search: " + query
+        data = process_query(query)
+        info = query_info(query)
+        return render_template('results_v2.html', data=data, query=info)

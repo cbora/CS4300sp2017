@@ -26,6 +26,7 @@ tfidf_vec = TfidfVectorizer(stop_words='english',
                             min_df=10,
                             max_df=0.8,
                             norm='l2',
+                            ngram_range=(1, 3),
                             vocabulary=None)
 
 scripts = [x['lines'] for x in data]
@@ -184,7 +185,7 @@ def reduce_matrix(s):
     return results
 
 sims = compute_similarities()
-s = 'svd_sims_array.npy'
+s = 'ngram_svd_sims_array.npy'
 np.save(s, sims)
 
 #hash_matrix = reduce_matrix(s)
